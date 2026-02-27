@@ -1,0 +1,22 @@
+<nav [class.scrolled]="isScrolled">
+  <a class="logo" routerLink="/">
+    <img src="assets/logo.png" alt="GoBooking Logo" class="navbar-logo-img">
+  </a>
+
+  <ul class="nav-links" [class.open]="mobileOpen">
+    <li><a routerLink="/"            routerLinkActive="active" [ro
+      
+      uterLinkActiveOptions]="{exact:true}" (click)="close()">Home</a></li>
+    <li><a routerLink="/destinations" routerLinkActive="active" (click)="close()">Destinations</a></li>
+    <li><a routerLink="/booking"      routerLinkActive="active" (click)="close()">Book a Tour</a></li>
+    <li><a routerLink="/contact"      routerLinkActive="active" (click)="close()">Contact</a></li>
+  </ul>
+
+  <div class="nav-right">
+    
+    <button class="nav-cta" routerLink="/booking">Book Now</button>
+    <button class="hamburger" (click)="toggle()" [class.open]="mobileOpen" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>

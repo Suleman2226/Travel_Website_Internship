@@ -1,0 +1,68 @@
+<!-- Page Hero -->
+<div class="dp-hero">
+  <h1>Explore <em>Incredible India</em></h1>
+  <p>200+ curated destinations across 28 states and 8 union territories</p>
+</div>
+
+<!-- Filter Bar -->
+<div class="filter-bar">
+  <input
+    type="text"
+    class="filter-search"
+    placeholder=" Search destinations, states..."
+    [(ngModel)]="searchQuery"
+    (ngModelChange)="applyFilters()"
+  />
+  <div class="chips">
+    <button
+      *ngFor="let f of filters"
+      class="chip"
+      [class.active]="activeFilter === f.key"
+      (click)="setFilter(f.key)"
+    >{{ f.label }}</button>
+  </div>
+</div>
+
+<!-- Loading -->
+<div class="loading-wrap" *ngIf="isLoading">
+  <div class="spinner"></div>
+  <p>Loading destinations...</p>
+</div>
+
+<!-- Destination Cards -->
+<div class="dest-list" *ngIf="!isLoading">
+  <div class="dest-card" *ngFor="let d of filteredDestinations" routerLink="/booking">
+    <div class="dc-img-wrap" [style.background]="d.bgGradient"><img
+    [src]="d.image"
+    [alt]="d.name"
+    style="width:100%; height:175px; object-fit:cover; display:block;"
+    (error)="onImgError($event, d.bgGradient)"
+  />
+  </div>
+    <div class="dc-body">
+      <div class="dc-type">{{ d.type }}</div>
+      <div class="dc-name">{{ d.name }}</div>
+      <div class="dc-state">📍 {{ d.state }} &nbsp;·&nbsp; ⭐ {{ d.rating }}</div>
+      <div class="dc-desc">{{ d.description }}</div>
+      <div class="dc-tags">
+        <span class="dc-tag" *ngFor="let tag of d.tags">{{ tag }}</span>
+      </div>
+      <div class="dc-foot">
+        <div class="dc-price">
+          ₹{{ d.priceFrom | number }}<span> / person</span>
+        </div>
+        <button class="dc-btn" routerLink="/booking" (click)="$event.stopPropagation()">Book Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="filteredDestinations.length === 0">
+    <div class="empty-icon">🗺️</div>
+    <h3>No destinations found</h3>
+    <p>Try a different keyword or filter</p>
+    <button class="clear-btn" (click)="clearFilters()">Clear Filters</button>
+  </div>
+</div>
+
+<app-footer></app-footer>

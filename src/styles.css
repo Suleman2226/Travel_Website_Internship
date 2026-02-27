@@ -1,0 +1,28 @@
+/* ── Google Fonts ── */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #FFFFFF;
+  color: #1A2332;
+  overflow-x: hidden;
+}
+
+main { padding-top: 68px; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #F4F6F8; }
+::-webkit-scrollbar-thumb { background: #FF6B00; border-radius: 3px; }

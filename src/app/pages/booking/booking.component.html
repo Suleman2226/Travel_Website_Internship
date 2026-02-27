@@ -1,0 +1,132 @@
+<div class="bk-wrap">
+  <!-- LEFT: Tour Package Selection -->
+  <aside class="bk-left">
+    <h2>Select Package</h2>
+    <p>Choose the tour package that suits your travel style and budget.</p>
+
+    <div
+      *ngFor="let tour of tours; let i = index"
+      class="pkg"
+      [class.sel]="selectedTour?.id === tour.id"
+      (click)="selectTour(tour)"
+    >
+      <h4>{{ tour.name }}</h4>
+      <div class="pkg-row">
+        <span class="pkg-d">⏱ {{ tour.duration }}</span>
+        <span class="pkg-p">₹{{ tour.pricePerPerson | number:'1.0-0' }}</span>
+      </div>
+      <p class="pkg-sub">{{ tour.description }}</p>
+      <ul class="pkg-inc" *ngIf="selectedTour?.id === tour.id">
+        <li *ngFor="let item of tour.includes">{{ item }}</li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- RIGHT: Booking Form -->
+  <div class="bk-right">
+    <h2>Complete Your Booking</h2>
+    <p>Our team confirms within 2 hours. No payment required at this stage.</p>
+
+    <!-- Success Message -->
+    <div class="success-box" *ngIf="isSuccess">
+      <div class="success-icon"></div>
+      <h3>Booking Confirmed!</h3>
+      <p>Thank you for choosing GoBooking! Our team will call you within 2 hours to confirm your tour details and discuss payment options.</p>
+      <div class="success-ref">Booking Reference: <strong>{{ bookingReference }}</strong></div>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" *ngIf="!isSuccess" novalidate>
+
+      <div class="form-section-label">Personal Information</div>
+      <div class="f-row">
+        <div class="fg" [class.err]="isInvalid('firstName')">
+          <label>First Name *</label>
+          <input type="text" formControlName="firstName" placeholder="Go">
+          <span class="fe">Please enter your first name (min. 2 chars)</span>
+        </div>
+        <div class="fg" [class.err]="isInvalid('lastName')">
+          <label>Last Name </label>
+          <input type="text" formControlName="lastName" placeholder="Booking">
+          <span class="fe">Please enter your last name</span>
+        </div>
+      </div>
+
+      <div class="f-row">
+        <div class="fg" [class.err]="isInvalid('email')">
+          <label>Email Address *</label>
+          <input type="email" formControlName="email" placeholder="GoBookingTravelTech@gobooking.com">
+          <span class="fe">Please enter a valid email address</span>
+        </div>
+        <div class="fg" [class.err]="isInvalid('phone')">
+          <label>Mobile Number </label>
+          <input type="tel" formControlName="phone" placeholder="+91 98765 43210">
+          <span class="fe">Please enter a valid mobile number</span>
+        </div>
+      </div>
+
+      <div class="form-section-label">Trip Details</div>
+      <div class="f-row">
+        <div class="fg" [class.err]="isInvalid('destination')">
+          <label>Destination *</label>
+          <select formControlName="destination">
+            <option value="">Select destination...</option>
+            <option *ngFor="let d of indianDestinations" [value]="d">{{ d }}</option>
+          </select>
+          <span class="fe">Please select a destination</span>
+        </div>
+        <div class="fg" [class.err]="isInvalid('tourType')">
+          <label>Tour Type *</label>
+          <select formControlName="tourType">
+            <option value="">Select type...</option>
+            <option *ngFor="let t of tourTypes" [value]="t">{{ t }}</option>
+          </select>
+          <span class="fe">Please select a tour type</span>
+        </div>
+      </div>
+
+      <div class="f-row">
+        <div class="fg" [class.err]="isInvalid('travelDate')">
+          <label>Travel Date *</label>
+          <input type="date" formControlName="travelDate" [min]="minDate">
+          <span class="fe">Please select a travel date</span>
+        </div>
+        <div class="fg" [class.err]="isInvalid('numberOfPeople')">
+          <label>Number of Travellers *</label>
+          <select formControlName="numberOfPeople">
+            <option [value]="n" *ngFor="let n of [1,2,3,4,5,6,7,8,9,10]">
+              {{ n }} {{ n === 1 ? 'Person' : 'People' }}
+            </option>
+          </select>
+          <span class="fe">Required</span>
+        </div>
+      </div>
+
+      <div class="fg">
+        <label>Special Requirements</label>
+        <textarea formControlName="specialRequests" placeholder="Dietary needs, accessibility requirements, special occasions..."></textarea>
+      </div>
+
+      <!-- Booking Summary -->
+      <div class="summary-panel" *ngIf="selectedTour">
+        <h4>📋 Booking Summary</h4>
+        <div class="sum-row"><span>Package</span><span>{{ selectedTour.name }}</span></div>
+        <div class="sum-row"><span>Duration</span><span>{{ selectedTour.duration }}</span></div>
+        <div class="sum-row"><span>Travellers</span>
+          <span>{{ bookingForm.get('numberOfPeople')?.value }}
+            {{ bookingForm.get('numberOfPeople')?.value === 1 ? 'Person' : 'People' }}
+          </span>
+        </div>
+        <div class="sum-row"><span>Rate / Person</span><span>₹{{ selectedTour.pricePerPerson | number:'1.0-0' }}</span></div>
+        <div class="sum-row total"><span><strong>Estimated Total</strong></span><span><strong>₹{{ totalPrice | number:'1.0-0' }}</strong></span></div>
+      </div>
+
+      <button type="submit" class="sub-btn" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Confirming...' : 'Confirm Booking →' }}
+      </button>
+      <p class="secure-note">🔒 Your information is safe with us. No payment required at this stage.</p>
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer>

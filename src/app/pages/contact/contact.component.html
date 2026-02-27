@@ -1,0 +1,81 @@
+<div class="ct-wrap">
+  <!-- LEFT: Contact Info -->
+  <aside class="ct-left">
+    <h2>Get in <em>Touch</em></h2>
+    <p>Have a question about a tour or destination? Our travel experts are available to help you plan the perfect journey.</p>
+
+    <div class="ci" *ngFor="let info of officeInfo">
+      <div class="ci-icon">{{ info.icon }}</div>
+      <div>
+        <div class="ci-label">{{ info.label }}</div>
+        <div class="ci-val" *ngFor="let line of info.lines">{{ line }}</div>
+      </div>
+    </div>
+
+    <hr class="ct-divider">
+
+    <div class="office-hours">
+      <h4>Office Hours</h4>
+      <div class="oh-row" *ngFor="let h of officeHours">
+        <span>{{ h.day }}</span>
+        <span>{{ h.time }}</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- RIGHT: Contact Form -->
+  <div class="ct-right">
+    <h3>Send Us a Message</h3>
+    <p>We respond to all inquiries within our business hours.</p>
+
+    <!-- Success -->
+    <div class="success-box" *ngIf="isSuccess">
+      <div class="success-icon"></div>
+      <h3>Message Sent!</h3>
+      <p>We've received your message and will respond within our business hours. Thank you for reaching out to GoBooking!</p>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" *ngIf="!isSuccess" novalidate>
+      <div class="f-row">
+        <div class="fg" [class.err]="isInvalid('name')">
+          <label>Full Name *</label>
+          <input type="text" formControlName="name" placeholder="GoBooking">
+          <span class="fe">Name is required (min. 2 chars)</span>
+        </div>
+        <div class="fg" [class.err]="isInvalid('email')">
+          <label>Email Address *</label>
+          <input type="email" formControlName="email" placeholder="Traveller@gobooking.com">
+          <span class="fe">A valid email is required</span>
+        </div>
+      </div>
+
+      <div class="f-row">
+        <div class="fg">
+          <label>Phone Number</label>
+          <input type="tel" formControlName="phone" placeholder="+91 99999 00000">
+        </div>
+        <div class="fg" [class.err]="isInvalid('subject')">
+          <label>Subject *</label>
+          <select formControlName="subject">
+            <option value="">Select subject...</option>
+            <option *ngFor="let s of subjects" [value]="s">{{ s }}</option>
+          </select>
+          <span class="fe">Please select a subject</span>
+        </div>
+      </div>
+
+      <div class="fg" [class.err]="isInvalid('message')">
+        <label>Your Message *</label>
+        <textarea formControlName="message" placeholder="Tell us about your travel plans, questions or requirements..."></textarea>
+        <span class="fe">Please enter your message (min. 10 characters)</span>
+      </div>
+
+      <button type="submit" class="sub-btn" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Sending...' : 'Send Message →' }}
+      </button>
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,159 @@
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-photo">
+    <div class="ht ht1"><img src="assets/hero.jpg" alt="Jaipur"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Travel the World Together</div>
+    <h1 class="hero-title">
+      Explore the<br>
+      <span class="hi">Heart of World</span><br>
+      Like Never Before
+    </h1>
+    <p class="hero-sub">
+      Your Journey Starts with GoBooking.
+
+    <div class="hero-btns">
+      <button class="btn-p" routerLink="/destinations">Explore Destinations →</button>
+      <button class="btn-g" routerLink="/booking">Book a Tour</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hst" *ngFor="let s of stats">
+        <span class="hst-num">{{ s.num }}</span>
+        <span class="hst-lbl">{{ s.label }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── QUICK SEARCH ── -->
+<div class="search-band">
+  <div class="search-card">
+    <div class="sf">
+      <label>Destination</label>
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Where in world?">
+    </div>
+    <div class="sf">
+      <label>Travel Date</label>
+      <input type="date" [(ngModel)]="selectedDate">
+    </div>
+    <div class="sf">
+      <label>Travellers</label>
+      <select [(ngModel)]="selectedPax">
+        <option>1 Person</option>
+        <option>2 People</option>
+        <option>3–5 People</option>
+        <option>Group (6+)</option>
+      </select>
+    </div>
+    <div class="sf">
+      <label>Tour Type</label>
+      <select [(ngModel)]="selectedType">
+        <option>All Types</option>
+        <option>Heritage</option>
+        <option>Beach</option>
+        <option>Adventure</option>
+        <option>Wildlife</option>
+        <option>Spiritual</option>
+      </select>
+    </div>
+    <button class="search-go" (click)="onSearch()"> &nbsp;Search Tours</button>
+  </div>
+</div>
+
+<!-- ── WHY US ── -->
+<div class="why-grid">
+    <div class="why-card" *ngFor="let f of features">
+      <div class="why-img" [style.backgroundImage]="'url(' + f.image + ')'">
+        <div class="why-img-overlay"></div>
+        <h3>{{ f.title }}</h3>
+      </div>
+      <div class="why-body">
+        <p>{{ f.desc }}</p>
+      </div>
+    </div>
+  </div>
+
+<!-- ── FEATURED DESTINATIONS ── -->
+<section class="feat-section">
+  <div class="sec-hd">
+    <div>
+      <div class="eyebrow">Top Picks</div>
+      <h2 class="sec-title">Popular <em>Destinations</em></h2>
+    </div>
+    <button class="view-all-btn" routerLink="/destinations">View All →</button>
+  </div>
+
+  <div class="feat-grid">
+    <div class="feat-card large-card" routerLink="/booking">
+      <div class="feat-img large-img">
+  <img src="assets/jaipur.png" alt="Jaipur">
+</div>
+      <div class="feat-overlay">
+        <span class="feat-badge">Heritage</span>
+        <div class="feat-name">Jaipur — The Pink City</div>
+        
+        <div class="feat-foot">
+          <span class="feat-rat">★ 4.9 (2.1k reviews)</span>
+          <span class="feat-pr">From ₹12,999</span>
+        </div>
+      </div>
+    </div>
+    <div class="feat-card" routerLink="/booking">
+      <div class="feat-img">
+  <img src="assets/goa.jpg" alt="Goa">
+</div>
+      <div class="feat-overlay">
+        <span class="feat-badge">Beach</span>
+        <div class="feat-name">Goa</div>
+        
+        <div class="feat-foot">
+          <span class="feat-rat">★ 4.8 (3.4k reviews)</span>
+          <span class="feat-pr">From ₹13,999</span>
+        </div>
+      </div>
+    </div>
+    <div class="feat-card" routerLink="/booking">
+      <div class="feat-img">
+  <img src="assets/kerala.jpg" alt="Kerala Backwaters">
+</div>
+      <div class="feat-overlay">
+        <span class="feat-badge">Nature</span>
+        <div class="feat-name">Kerala Backwaters</div>
+        
+        <div class="feat-foot">
+          <span class="feat-rat">★ 4.9 (1.8k reviews)</span>
+          <span class="feat-pr">From ₹17,999</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="testi-section">
+  <div class="testi-header">
+    <div class="eyebrow" style="color:#FF6B00">Traveller Reviews</div>
+    <h2 class="sec-title" style="color:#fff">What Our Guests <em>Say</em></h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card" *ngFor="let t of testimonials">
+      <div class="tc-stars">★★★★★</div>
+      <p class="tc-text">"{{ t.text }}"</p>
+      <div class="tc-author">
+        <div class="tc-av">{{ t.initials }}</div>
+        <div>
+          <div class="tc-name">{{ t.name }}</div>
+          <div class="tc-city">{{ t.city }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
